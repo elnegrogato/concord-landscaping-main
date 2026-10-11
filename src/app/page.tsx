@@ -3,12 +3,12 @@
 import { useState, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Image from 'next/image';
-import { Leaf, Droplets, MapPin, Phone, Mail, Spade, Trees, Clock, CheckCircle2, Menu, X, Hammer, Star, ArrowRight, Shield, Sprout, CalendarDays } from 'lucide-react';
+import { Leaf, Droplets, MapPin, Phone, Mail, Spade, Trees, Clock, CheckCircle2, Menu, X, Hammer,         ArrowRight, Shield, Sprout, CalendarDays } from 'lucide-react';
 import Link from 'next/link';
 import { toast } from 'sonner';
 import { NavBar } from '@/components/public/blocks/NavBar';
 import { Footer } from '@/components/public/blocks/Footer';
-import { TrustBadge, ServiceCard, GalleryItem, TestimonialCard, FormField, ListItem } from '@/components/public/helpers';
+import { TrustBadge, ServiceCard, GalleryItem, FormField, ListItem } from '@/components/public/helpers';
 
 export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -189,8 +189,8 @@ export default function Home() {
           {/* Side Stats */}
           <div className="grid grid-cols-1 gap-4 lg:col-span-1">
             <div className="bg-[#D4A373] text-white rounded-[24px] p-8 flex flex-col items-center justify-center border border-[#1B4332]/10 h-full min-h-[160px]">
-              <div className="text-5xl font-extrabold mb-1 font-serif">450+</div>
-              <div className="text-xs uppercase tracking-widest opacity-90 font-bold text-center">Properties Managed</div>
+              <div className="text-5xl font-extrabold mb-1 font-serif">Free</div>
+              <div className="text-xs uppercase tracking-widest opacity-90 font-bold text-center">Estimates</div>
             </div>
             <div className="bg-[#95D5B2] text-[#1B4332] rounded-[24px] p-8 flex flex-col justify-center border border-[#1B4332]/10 h-full">
                <blockquote className="font-serif italic text-lg leading-relaxed mb-4">
@@ -212,7 +212,6 @@ export default function Home() {
           className="grid grid-cols-2 md:grid-cols-4 gap-4"
         >
           <TrustBadge icon={<Shield className="w-5 h-5" />} label="Licensed & Insured" />
-          <TrustBadge icon={<Star className="w-5 h-5" />} label="4.9★ Rating" />
           <TrustBadge icon={<CalendarDays className="w-5 h-5" />} label="16+ Years Experience" />
           <TrustBadge icon={<Sprout className="w-5 h-5" />} label="Eco-Friendly Practices" />
         </motion.div>
@@ -341,26 +340,6 @@ export default function Home() {
           </div>
         </motion.section>
 
-        {/* ═══ Testimonials Strip ═══ */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          className="grid md:grid-cols-2 gap-4"
-        >
-          <TestimonialCard
-            quote="The best irrigation and landscaping team in Cabarrus County. They transformed our entire backyard into an oasis."
-            name="Sarah Jenkins"
-            role="Homeowner, Concord"
-            rating={5}
-          />
-          <TestimonialCard
-            quote="Professional from start to finish. Our paver patio and fire pit turned out even better than we imagined. Highly recommend!"
-            name="Michael Torres"
-            role="Homeowner, Harrisburg"
-            rating={5}
-          />
-        </motion.div>
 
         {/* ═══ Contact + Info ═══ */}
         <motion.div 

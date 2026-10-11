@@ -126,11 +126,6 @@ const jsonLd = {
       { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Lawn Maintenance' } },
     ],
   },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.9',
-    reviewCount: '127',
-  },
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
