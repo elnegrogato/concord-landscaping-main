@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+/* ─── Design Tokens ─── */
+@theme {
+  --color-forest: #1B4332;
+  --color-forest-deep: #0D2818;
+  --color-charcoal: #2D3A3A;
+  --color-gold: #D4A373;
+  --color-gold-light: #E8C9A0;
+  --color-mint: #95D5B2;
+  --color-mint-light: #D8F3DC;
+  --color-cream: #F8F9F1;
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+}
+
+/* ─── Base ─── */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--color-forest);
+  color: white;
+}
+
+/* ─── Custom Scrollbar ─── */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-forest);
+  border-radius: 999px;
+  opacity: 0.3;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  opacity: 0.6;
+}
+
+/* Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-forest) transparent;
+}
+
+/* ─── Focus outlines ─── */
+*:focus-visible {
+  outline: 2px solid var(--color-mint);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ─── Smooth image loading ─── */
+img {
+  transition: opacity 0.3s ease;
+}
+
+/* ─── Form element polish ─── */
+input, textarea, select {
+  font-family: inherit;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px var(--color-cream) inset;
+  -webkit-text-fill-color: var(--color-charcoal);
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
