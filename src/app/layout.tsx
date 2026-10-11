@@ -15,8 +15,8 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: 'Concord Landscaping | Premium Landscape & Irrigation Services in Concord, NC',
-  description: 'Transform your outdoor spaces with Concord Landscaping. Expert landscape design, hardscaping, irrigation systems, and maintenance serving Cabarrus County, NC since 2008. Licensed & fully insured. Free estimates.',
+  title: 'Concord Landscaping | Landscape, Hardscaping & Irrigation Services in Concord, NC',
+  description: 'Concord Landscaping offers premium landscape design, hardscaping, irrigation systems, and lawn maintenance in Concord, NC and Cabarrus County. Licensed & fully insured since 2008. Call (704) 886-4240 for a free estimate.',
   keywords: ['landscaping', 'lawn care', 'irrigation', 'hardscaping', 'Concord NC', 'Cabarrus County', 'landscape design', 'patio installation', 'lawn maintenance'],
   authors: [{ name: 'Concord Landscaping' }],
   creator: 'Concord Landscaping',
@@ -42,6 +42,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
+    site: '@concordlandscaping',
+    creator: '@concordlandscaping',
     title: 'Concord Landscaping | Premium Landscape & Irrigation Services',
     description: 'Expert landscape design, hardscaping, irrigation, and maintenance in Concord, NC.',
     images: ['/images/hero.png'],
@@ -66,10 +68,18 @@ const jsonLd = {
   name: 'Concord Landscaping',
   description: 'Premium landscape design, hardscaping, irrigation systems, and maintenance services in Concord, NC.',
   url: 'https://concordlandscaping.com',
-  telephone: '+17045550192',
+  telephone: '+17048864240',
   email: 'info@concordlandscaping.com',
   foundingDate: '2008',
-  image: '/images/hero.png',
+  image: 'https://concordlandscaping.com/images/hero.png',
+  priceRange: '$$',
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: '+17048864240',
+    contactType: 'customer service',
+    areaServed: 'US',
+    availableLanguage: 'English',
+  },
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Concord',

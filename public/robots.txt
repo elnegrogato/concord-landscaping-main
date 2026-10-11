@@ -1,0 +1,9 @@
+# robots.txt for Concord Landscaping
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://concordlandscaping.com/sitemap.xml
+
+# Crawl-delay recommendation (optional)
+Crawl-delay: 1

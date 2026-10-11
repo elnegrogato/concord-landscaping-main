@@ -13,8 +13,8 @@
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
     "test:run": "vitest run",
-    "gen:all": "ts-node --project tsconfig.scripts.json scripts/build-data.cts && ts-node --project tsconfig.scripts.json scripts/generate-routes.cts && ts-node --project tsconfig.scripts.json scripts/generate-page-manifests.cts && ts-node --project tsconfig.scripts.json scripts/generate-faq-variants.cts && ts-node --project tsconfig.scripts.json scripts/generate-local-proof-blocks.cts && ts-node --project tsconfig.scripts.json scripts/generate-uniqueness.cts",
-    "gen:sitemaps": "ts-node --project tsconfig.scripts.json scripts/generate-sitemaps.cts && ts-node --project tsconfig.scripts.json scripts/generate-robots.cts",
+    "gen:all": "ts-node --project tsconfig.scripts.json scripts/build-data.cts && ts-node --project tsconfig.scripts.json scripts/generate-routes.cts && ts-node --project tsconfig.scripts.json scripts/generate-page-manifests.cts && ts-node --project tsconfig.scripts.json scripts/generate-faq-variants.cts && ts-node --project tsconfig.scripts.json scripts/generate-local-proof-blocks.cts && ts-node --project tsconfig.scripts.json scripts/generate-uniqueness.cts && ts-node --project tsconfig.scripts.json scripts/generate-sitemap.cts",
+    "gen:sitemaps": "ts-node --project tsconfig.scripts.json scripts/generate-sitemap.cts",
     "gen:content": "ts-node --project tsconfig.scripts.json scripts/build-data.cts",
     "health": "node scripts/health-check.js"
   },

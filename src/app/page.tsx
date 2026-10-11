@@ -55,6 +55,72 @@ export default function Home() {
     <div className="min-h-screen bg-[#F8F9F1] text-[#2D3A3A] p-4 md:p-6 lg:p-8 flex flex-col items-center font-sans scroll-smooth custom-scrollbar">
       <NavBar />
 
+      {/* Page-specific structured data (Service + BreadcrumbList) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: "https://concordlandscaping.com",
+              },
+            ],
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "Service",
+              name: "Landscape Design",
+              provider: {
+                "@type": "LandscapingBusiness",
+                name: "Concord Landscaping",
+                telephone: "+17048864240",
+              },
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "Service",
+              name: "Hardscaping",
+              provider: {
+                "@type": "LandscapingBusiness",
+                name: "Concord Landscaping",
+                telephone: "+17048864240",
+              },
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "Service",
+              name: "Irrigation Systems",
+              provider: {
+                "@type": "LandscapingBusiness",
+                name: "Concord Landscaping",
+                telephone: "+17048864240",
+              },
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "Service",
+              name: "Lawn Maintenance",
+              provider: {
+                "@type": "LandscapingBusiness",
+                name: "Concord Landscaping",
+                telephone: "+17048864240",
+              },
+            },
+          ]),
+        }}
+      />
+
       {/* Main Container */}
       <main className="w-full max-w-6xl mx-auto flex flex-col gap-4">
         
