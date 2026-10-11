@@ -109,13 +109,13 @@ export default function Home() {
                   Request a Free Quote
                   <ArrowRight className="w-4 h-4" />
                 </Link>
-                <a 
-                  href="tel:+17045550192"
-                  className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded-full font-bold uppercase tracking-wider text-xs md:text-sm hover:bg-white/20 transition-colors w-fit flex items-center gap-2"
-                >
-                  <Phone className="w-4 h-4" />
-                  (704) 555-0192
-                </a>
+                  <a
+                    href="tel:+17048864240"
+                    className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded-full font-bold uppercase tracking-wider text-xs md:text-sm hover:bg-white/20 transition-colors w-fit flex items-center gap-2"
+                  >
+                    <Phone className="w-4 h-4" />
+                    (704) 886-4240
+                  </a>
               </div>
             </motion.div>
           </motion.section>
@@ -385,9 +385,9 @@ export default function Home() {
                  <p className="text-sm font-medium text-[#2D3A3A]/70">Concord, Harrisburg, Kannapolis & Surrounding Areas</p>
                </div>
                <div className="flex flex-col gap-2 mt-2 w-full">
-                 <a href="tel:+17045550192" className="flex items-center justify-center gap-2 text-[#1B4332] font-bold text-sm hover:text-[#D4A373] transition-colors">
-                   <Phone className="w-4 h-4" /> (704) 555-0192
-                 </a>
+                   <a href="tel:+17048864240" className="flex items-center justify-center gap-2 text-[#1B4332] font-bold text-sm hover:text-[#D4A373] transition-colors">
+                     <Phone className="w-4 h-4" /> (704) 886-4240
+                   </a>
                  <a href="mailto:info@concordlandscaping.com" className="flex items-center justify-center gap-2 text-[#1B4332]/70 font-medium text-xs hover:text-[#D4A373] transition-colors">
                    <Mail className="w-3.5 h-3.5" /> info@concordlandscaping.com
                  </a>

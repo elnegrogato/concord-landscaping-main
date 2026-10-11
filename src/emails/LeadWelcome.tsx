@@ -40,8 +40,8 @@ const LeadWelcomeEmail = ({ lead }: LeadWelcomeEmailProps) => {
           <Section className="text-center">
             <Text className="text-[14px] leading-[24px] text-[#44403c]">
               Have questions in the meantime? Just reply to this email or call us at{" "}
-              <a href="tel:+15551234567" className="text-[#0070f3] no-underline">
-                (555) 123-4567
+              <a href="tel:+17048864240" className="text-[#0070f3] no-underline">
+                (704) 886-4240
               </a>
               .
             </Text>

@@ -8,9 +8,9 @@ export function Footer() {
       <div className="flex flex-col md:flex-row justify-between items-center text-xs font-medium gap-4">
         <p>© {new Date().getFullYear()} Concord Landscaping. All rights reserved.</p>
         <div className="flex gap-6">
-          <a href="tel:+17045550192" className="hover:text-white transition-colors flex items-center gap-1.5">
+          <a href="tel:+17048864240" className="hover:text-white transition-colors flex items-center gap-1.5">
             <Phone className="w-3 h-3" />
-            (704) 555-0192
+            (704) 886-4240
           </a>
           <a
             href="mailto:info@concordlandscaping.com"
