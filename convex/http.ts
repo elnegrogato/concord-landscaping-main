@@ -126,6 +126,8 @@ http.route({
       intent,
       leadSource: "sms",
       notes: bodyText,
+      // SMS auto-create: no explicit outbound-communication consent captured.
+      consentGiven: false,
     });
     await ctx.runMutation(api.leads.contact, {
       leadId,
@@ -175,6 +177,8 @@ http.route({
           intent: /(repair|fix|broken)/i.test(lower) ? "repair" : "inquiry",
           leadSource: "phone",
           notes: speech,
+          // Phone/SMS auto-create: no explicit outbound-communication consent captured.
+          consentGiven: false,
         });
         await ctx.runMutation(api.leads.contact, {
           leadId,

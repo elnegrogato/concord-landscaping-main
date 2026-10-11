@@ -1,6 +1,8 @@
 import type {Metadata} from 'next';
 import { Inter, Cormorant_Garamond } from 'next/font/google';
 import { Toaster } from 'sonner';
+import Script from 'next/script';
+import { Suspense } from 'react';
 import './globals.css'; // Global styles
 
 const inter = Inter({
@@ -133,12 +135,56 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     <html lang="en" className={`${inter.variable} ${cormorant.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
+        {/* Google Tag Manager — set NEXT_PUBLIC_GTM_ID in .env.local (see .env.example) */}
+        {process.env.NEXT_PUBLIC_GTM_ID && (
+          <Script
+            id="google-tag-manager"
+            strategy="afterInteractive"
+            src={`https://www.googletagmanager.com/gtm.js?id=${process.env.NEXT_PUBLIC_GTM_ID}`}
+          />
+        )}
+        {/* Google Analytics (GA4) — set NEXT_PUBLIC_GA_MEASUREMENT_ID in .env.local */}
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+          <>
+            <Script
+              id="google-analytics"
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
+            />
+            <Script
+              id="google-analytics-config"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}', {send_page_view: true});
+                `,
+              }}
+            />
+          </>
+        )}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body className="font-sans text-[#2D3A3A] bg-[#F8F9F1] selection:bg-[#1B4332] selection:text-white" suppressHydrationWarning>
+        {/* Google Tag Manager (noscript fallback for crawlers that do not execute JS) */}
+        {process.env.NEXT_PUBLIC_GTM_ID && (
+          <Suspense fallback={null}>
+            <noscript>
+              <iframe
+                src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM_ID}`}
+                height="0"
+                width="0"
+                style={{ display: "none", visibility: "hidden" }}
+                title="Google Tag Manager (noscript)"
+              />
+            </noscript>
+          </Suspense>
+        )}
         {children}
         <Toaster richColors position="bottom-right" />
       </body>

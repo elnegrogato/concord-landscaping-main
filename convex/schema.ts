@@ -52,6 +52,11 @@ export default defineSchema({
     // Metadata
     notes: v.optional(v.string()),
     tags: v.array(v.string()),
+    // Communication consent (required before outbound email/SMS/voice follow-up)
+    consentGiven: v.boolean(),
+    consentTimestamp: v.optional(v.number()),
+    consentVersion: v.optional(v.string()),
+    consentSourcePage: v.optional(v.string()),
     createdAt: v.number(),
     updatedAt: v.number(),
   }).index("by_status", ["status"])

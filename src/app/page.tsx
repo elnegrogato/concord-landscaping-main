@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Image from 'next/image';
 import { Leaf, Droplets, MapPin, Phone, Mail, Spade, Trees, Clock, CheckCircle2, Menu, X, Hammer,         ArrowRight, Shield, Sprout, CalendarDays } from 'lucide-react';
@@ -9,10 +9,49 @@ import { toast } from 'sonner';
 import { NavBar } from '@/components/public/blocks/NavBar';
 import { Footer } from '@/components/public/blocks/Footer';
 import { TrustBadge, ServiceCard, GalleryItem, FormField, ListItem } from '@/components/public/helpers';
+import { analytics } from '@/lib/analytics';
 
 export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Scroll-depth tracking for the homepage (engaged-view + scroll events).
+  useEffect(() => {
+    let timeout: number;
+    const onScroll = () => {
+      const height = document.documentElement.scrollHeight;
+      const scrollTop = window.scrollY;
+      const depth = Math.round((scrollTop / (height - window.innerHeight)) * 100);
+      if (depth > 25 && depth <= 50) {
+        analytics.scrollDepth('/', 25);
+        analytics.engagedView('/');
+      } else if (depth > 50 && depth <= 75) {
+        analytics.scrollDepth('/', 50);
+      } else if (depth > 75) {
+        analytics.scrollDepth('/', 75);
+      }
+      window.clearTimeout(timeout);
+      timeout = window.setTimeout(() => {}, 250);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.clearTimeout(timeout);
+    };
+  }, []);
+
+  function trackPhoneClick(phone: string) {
+    analytics.phoneClick('/', phone);
+  }
+
+  function trackEmailClick(email: string) {
+    analytics.emailClick('/', email);
+  }
+
+  function trackService(service: string) {
+    if (service) analytics.serviceSelect('/', service);
+  }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -21,6 +60,20 @@ export default function Home() {
     const form = e.currentTarget;
     const formData = new FormData(form);
 
+    // Capture UTM parameters from the URL at submission time.
+    const url = new URL(window.location.href);
+    const utm = {
+      source: url.searchParams.get('utm_source') || undefined,
+      medium: url.searchParams.get('utm_medium') || undefined,
+      campaign: url.searchParams.get('utm_campaign') || undefined,
+      term: url.searchParams.get('utm_term') || undefined,
+      content: url.searchParams.get('utm_content') || undefined,
+    };
+
+    const consentCheckbox = form.querySelector('input[name="consent"]') as HTMLInputElement;
+
+    analytics.formStart('/', 'quote-form');
+
     const payload = {
       firstName: formData.get('firstName') as string,
       lastName: formData.get('lastName') as string,
@@ -28,6 +81,9 @@ export default function Home() {
       phone: formData.get('phone') as string,
       projectDetails: formData.get('projectDetails') as string,
       service: formData.get('service') as string,
+      consentGiven: Boolean(consentCheckbox?.checked),
+      consentSourcePage: '/',
+      utm,
     };
 
     try {
@@ -42,9 +98,13 @@ export default function Home() {
         throw new Error(data.error || 'Something went wrong');
       }
 
+      analytics.formSubmit('/', 'quote-form', true);
+      analytics.lead('/', 'granted');
       toast.success('Message sent! We will be in touch within 24 hours.');
       form.reset();
     } catch (err) {
+      analytics.formSubmit('/', 'quote-form', false);
+      analytics.formError('/', 'quote-form', err instanceof Error ? err.message : 'Failed to send message.');
       toast.error(err instanceof Error ? err.message : 'Failed to send message. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -175,13 +235,18 @@ export default function Home() {
                   Request a Free Quote
                   <ArrowRight className="w-4 h-4" />
                 </Link>
-                  <a
-                    href="tel:+17048864240"
-                    className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded-full font-bold uppercase tracking-wider text-xs md:text-sm hover:bg-white/20 transition-colors w-fit flex items-center gap-2"
-                  >
-                    <Phone className="w-4 h-4" />
-                    (704) 886-4240
-                  </a>
+                    <a
+                      href="tel:+17048864240"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        trackPhoneClick('+17048864240');
+                        window.location.href = 'tel:+17048864240';
+                      }}
+                      className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded-full font-bold uppercase tracking-wider text-xs md:text-sm hover:bg-white/20 transition-colors w-fit flex items-center gap-2"
+                    >
+                      <Phone className="w-4 h-4" />
+                      (704) 886-4240
+                    </a>
               </div>
             </motion.div>
           </motion.section>
@@ -372,6 +437,7 @@ export default function Home() {
                 <select 
                   id="service"
                   name="service" 
+                  onChange={(e) => trackService(e.target.value)}
                   className="w-full bg-[#F8F9F1] border border-[#1B4332]/10 rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#95D5B2] focus:border-transparent transition-all outline-none text-sm font-medium text-[#2D3A3A] appearance-none"
                 >
                   <option value="">Select a service (optional)</option>
@@ -392,6 +458,27 @@ export default function Home() {
                   required
                   placeholder="Tell us about your project..."
                 />
+              </div>
+
+              {/* Consent (required before follow-up contact) */}
+              <div className="space-y-1.5">
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    name="consent"
+                    className="mt-0.5 w-4 h-4 rounded border-[#1B4332]/20 bg-[#F8F9F1] text-[#1B4332] focus:ring-2 focus:ring-[#95D5B2]"
+                    required
+                    aria-required="true"
+                  />
+                  <span className="text-xs text-[#2D3A3A]/70">
+                    I agree to the{' '}
+                    <Link href="/privacy" className="underline hover:text-[#1B4332]">
+                      Privacy Policy
+                    </Link>{' '}
+                    and consent to be contacted about my project by Concord Landscaping via email
+                    or phone. I understand I can unsubscribe or withdraw consent at any time.
+                  </span>
+                </label>
               </div>
 
               <button 
@@ -430,12 +517,28 @@ export default function Home() {
                  <p className="text-sm font-medium text-[#2D3A3A]/70">Concord, Harrisburg, Kannapolis & Surrounding Areas</p>
                </div>
                <div className="flex flex-col gap-2 mt-2 w-full">
-                   <a href="tel:+17048864240" className="flex items-center justify-center gap-2 text-[#1B4332] font-bold text-sm hover:text-[#D4A373] transition-colors">
+                   <a
+                     href="tel:+17048864240"
+                     onClick={(e) => {
+                       e.preventDefault();
+                       trackPhoneClick('+17048864240');
+                       window.location.href = 'tel:+17048864240';
+                     }}
+                     className="flex items-center justify-center gap-2 text-[#1B4332] font-bold text-sm hover:text-[#D4A373] transition-colors"
+                   >
                      <Phone className="w-4 h-4" /> (704) 886-4240
                    </a>
-                 <a href="mailto:info@concordlandscaping.com" className="flex items-center justify-center gap-2 text-[#1B4332]/70 font-medium text-xs hover:text-[#D4A373] transition-colors">
-                   <Mail className="w-3.5 h-3.5" /> info@concordlandscaping.com
-                 </a>
+                   <a
+                     href="mailto:info@concordlandscaping.com"
+                     onClick={(e) => {
+                       e.preventDefault();
+                       trackEmailClick('info@concordlandscaping.com');
+                       window.location.href = 'mailto:info@concordlandscaping.com';
+                     }}
+                     className="flex items-center justify-center gap-2 text-[#1B4332]/70 font-medium text-xs hover:text-[#D4A373] transition-colors"
+                   >
+                     <Mail className="w-3.5 h-3.5" /> info@concordlandscaping.com
+                   </a>
                </div>
              </motion.section>
              

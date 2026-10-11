@@ -39,6 +39,11 @@ export const create = mutation({
     notes: v.optional(v.string()),
     tags: v.optional(v.array(v.string())),
     metadata: v.optional(v.any()),
+    // Communication consent (required before outbound email/SMS/voice follow-up)
+    consentGiven: v.boolean(),
+    consentTimestamp: v.optional(v.number()),
+    consentVersion: v.optional(v.string()),
+    consentSourcePage: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     const now = Date.now();
@@ -85,6 +90,11 @@ export const create = mutation({
       utm: args.utm,
       notes: args.notes,
       tags: args.tags || [],
+      // Communication consent
+      consentGiven: args.consentGiven,
+      consentTimestamp: args.consentTimestamp,
+      consentVersion: args.consentVersion,
+      consentSourcePage: args.consentSourcePage,
       createdAt: now,
       updatedAt: now,
     });

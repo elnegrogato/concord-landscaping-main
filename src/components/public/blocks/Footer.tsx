@@ -19,6 +19,12 @@ export function Footer() {
             <Mail className="w-3 h-3" />
             Email Us
           </a>
+          <a href="/privacy" className="hover:text-white transition-colors">
+            Privacy Policy
+          </a>
+          <a href="/terms" className="hover:text-white transition-colors">
+            Terms of Use
+          </a>
         </div>
       </div>
     </footer>

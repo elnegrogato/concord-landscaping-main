@@ -11,6 +11,9 @@ interface ContactFormData {
   phone?: string;
   projectDetails: string;
   service?: string;
+  // Communication consent (required before outbound follow-up).
+  consentGiven: boolean;
+  consentSourcePage?: string;
 }
 
 export async function POST(request: NextRequest) {
@@ -28,20 +31,29 @@ export async function POST(request: NextRequest) {
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(body.email)) {
+      return NextResponse.json({ error: 'Invalid email address' }, { status: 400 });
+    }
+
+    // Consent is required before we can send any follow-up communication.
+    if (!body.consentGiven) {
       return NextResponse.json(
-        { error: 'Invalid email address' },
+        { error: 'You must consent to be contacted before we can process your request.' },
         { status: 400 }
       );
     }
 
-    // Log the lead locally
+    const timestamp = new Date().toISOString();
+
+    // Log the lead locally (includes consent record for compliance).
     console.log('📩 New lead received:', {
       name: `${body.firstName} ${body.lastName}`,
       email: body.email,
       phone: body.phone || 'N/A',
       service: body.service || 'General',
       details: body.projectDetails,
-      timestamp: new Date().toISOString(),
+      consentGiven: body.consentGiven,
+      consentSourcePage: body.consentSourcePage || 'home',
+      timestamp,
     });
 
     // Operationalize lead management with Resend if API key is present
@@ -59,6 +71,10 @@ export async function POST(request: NextRequest) {
           <br />
           <h3>Project Details:</h3>
           <p>${body.projectDetails.replace(/\n/g, '<br />')}</p>
+          <br />
+          <p style="font-size: 12px; color: #666;"><strong>Consent:</strong> The lead consented to be contacted via email/phone on submission. Source page: ${
+            body.consentSourcePage || 'home'
+          }. See our <a href="https://concordlandscaping.com/privacy">Privacy Policy</a>.</p>
         `,
       });
 
