@@ -198,7 +198,7 @@ export default function Home() {
                </blockquote>
                <div className="font-bold text-sm tracking-wide flex items-center gap-2">
                  <div className="w-8 h-8 rounded-full bg-[#1B4332] text-[#95D5B2] flex items-center justify-center text-xs font-serif italic">est</div>
-                 <span>Since 2008</span>
+                 <span>Since 2001</span>
                </div>
             </div>
           </div>
@@ -212,7 +212,7 @@ export default function Home() {
           className="grid grid-cols-2 md:grid-cols-4 gap-4"
         >
           <TrustBadge icon={<Shield className="w-5 h-5" />} label="Licensed & Insured" />
-          <TrustBadge icon={<CalendarDays className="w-5 h-5" />} label="16+ Years Experience" />
+          <TrustBadge icon={<CalendarDays className="w-5 h-5" />} label="26+ Years Experience" />
           <TrustBadge icon={<Sprout className="w-5 h-5" />} label="Eco-Friendly Practices" />
         </motion.div>
 

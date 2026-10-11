@@ -70,7 +70,7 @@ const jsonLd = {
   url: 'https://concordlandscaping.com',
   telephone: '+17048864240',
   email: 'info@concordlandscaping.com',
-  foundingDate: '2008',
+  foundingDate: '2001',
   image: 'https://concordlandscaping.com/images/hero.png',
   priceRange: '$$',
   contactPoint: {
